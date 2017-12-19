@@ -1,0 +1,21 @@
+version: '2'
+settings:
+  conductor:
+    base: '{{ var_base_image }}'
+    roles_path: '/home/docker/.ansible'
+  project_name: '{{ var_project_name }}'
+services:
+  apiserver:
+    from: '{{ var_service_image }}'
+    {%- if var_project_type == 'NODEJS' %}working_dir: /nodeapp{% endif %}
+    roles:
+    {%- if var_project_type == 'NODEJS' %}
+       - ansible-role-repoepel
+       - ansible-role-nodejs
+       - ansible-role-nodeapiserver
+    {%- else %}
+       - ansible-role-sbootsvr
+       - ansible-role-javaapiserver{%- endif %}
+    expose:
+     - '{{ var_service_expose_port }}'
+    command: ['/usr/bin/java','-jar','{{ var_java_archive_file }}']

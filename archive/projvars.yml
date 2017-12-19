@@ -1,0 +1,5 @@
+  'var_base_image': 'Centos:7'
+  'var_service_image': 'Centos:7'
+  'var_service_expose_port': '8080'
+  'var_project_name': 'getolb'
+  'var_project_type': 'JAVA'
